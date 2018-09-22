@@ -39,7 +39,7 @@
     </dependencies>
 
     <build>
-        <finalName>EpicWarps_1.12.2_${project.version}_${maven.build.timestamp}</finalName>
+        <finalName>EpicWarps_${project.version}_${maven.build.timestamp}</finalName>
         <!--<finalName>${project.artifactId}_${minecraft.server.version}_${project.version}_${maven.build.timestamp}</finalName>-->
         <pluginManagement>
             <plugins>

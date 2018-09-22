@@ -6,6 +6,7 @@ import com.playmonumenta.epicwarps.WarpManager;
 
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -27,11 +28,15 @@ public class Warp extends AbstractPlayerCommand {
 	}
 
 	@Override
-	protected boolean run(final CommandContext context) throws Exception {
+	protected boolean run(final CommandContext context) {
 		final Player player = context.getPlayer().get();
 		final String name = context.getNamespace().get("name");
 
-		WarpManager.getWarpManager().warp(player, name);
+		try {
+			WarpManager.getWarpManager().warp(player, name);
+		} catch (Exception e) {
+			player.sendMessage(ChatColor.RED + "" + e.getMessage());
+		}
 
 		return true;
 	}

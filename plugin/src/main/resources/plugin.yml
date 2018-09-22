@@ -1,6 +1,6 @@
 name: EpicWarps
 main: com.playmonumenta.epicwarps.Plugin
-version: dev
+version: 1.0
 commands:
   warp:
     permission: epicwarps.warp
@@ -9,6 +9,9 @@ commands:
     permission: epicwarps.warp
     description: Lists available warps.
   addwarp:
+    permission: epicwarps.addwarp
+    description: Creates a new warp at the current location.
+  setwarp:
     permission: epicwarps.addwarp
     description: Creates a new warp at the current location.
   delwarp:

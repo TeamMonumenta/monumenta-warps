@@ -6,14 +6,15 @@ import com.playmonumenta.epicwarps.WarpManager;
 
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class SetWarp extends AbstractPlayerCommand {
+public class AddWarp extends AbstractPlayerCommand {
 
-	public SetWarp(Plugin plugin) {
+	public AddWarp(Plugin plugin) {
 		super(
-		    "setwarp",
+		    "addwarp",
 		    "Creates a new warp at the current location.",
 		    plugin
 		);
@@ -27,11 +28,17 @@ public class SetWarp extends AbstractPlayerCommand {
 	}
 
 	@Override
-	protected boolean run(final CommandContext context) throws Exception {
+	protected boolean run(final CommandContext context) {
 		final Player player = context.getPlayer().get();
 		final String name = context.getNamespace().get("name");
 
-		WarpManager.getWarpManager().addWarp(name, player.getLocation());
+		try {
+			WarpManager.getWarpManager().addWarp(name, player.getLocation());
+		} catch (Exception e) {
+			player.sendMessage(ChatColor.RED + "" + e.getMessage());
+		}
+
+		// TODO: Success message
 
 		return true;
 	}

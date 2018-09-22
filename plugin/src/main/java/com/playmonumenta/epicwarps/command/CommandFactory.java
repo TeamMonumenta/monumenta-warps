@@ -16,8 +16,11 @@ public class CommandFactory {
 		createCommand(plugin, new Forward(plugin));
 		createCommand(plugin, new Warp(plugin));
 		createCommand(plugin, new Warps(plugin));
-		createCommand(plugin, new SetWarp(plugin));
+		createCommand(plugin, new AddWarp(plugin));
 		createCommand(plugin, new DelWarp(plugin));
+
+		// Alias for addwarp
+		plugin.getCommand("setwarp").setExecutor(new AddWarp(plugin));
 	}
 
 	/**

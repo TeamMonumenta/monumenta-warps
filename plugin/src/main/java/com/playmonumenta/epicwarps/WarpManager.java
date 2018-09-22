@@ -25,6 +25,11 @@ public class WarpManager {
 		WARP_MANAGER = this;
 		mPlugin = plugin;
 
+		// Load the warps configuration section
+		if (!config.isConfigurationSection("warps")) {
+			plugin.getLogger().log(Level.INFO, "No warps defined");
+			return;
+		}
 		ConfigurationSection warpsSection = config.getConfigurationSection("warps");
 
 		Set<String> keys = warpsSection.getKeys(false);
@@ -69,7 +74,7 @@ public class WarpManager {
 	}
 
 	public void listWarps(CommandSender sender, int page) {
-		final int ITEMS_PER_PAGE = 20;
+		final int ITEMS_PER_PAGE = 10;
 		final int numPages = ((mWarps.size() - 1) / ITEMS_PER_PAGE) + 1;
 
 		if (mWarps.isEmpty()) {
@@ -87,8 +92,7 @@ public class WarpManager {
 				skipped++;
 			} else {
 				printed++;
-				sender.sendMessage(ChatColor.GREEN + entry.getKey() + " : " + ChatColor.RESET +
-								   entry.getValue().getName());
+				sender.sendMessage(ChatColor.GREEN + entry.getKey());
 
 				if (printed >= ITEMS_PER_PAGE) {
 					return;
