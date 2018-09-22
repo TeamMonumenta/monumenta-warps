@@ -1,0 +1,10 @@
+name: EpicWarps
+main: com.playmonumenta.epicwarps.Plugin
+version: dev
+commands:
+  back:
+    permission: epicwarps.command.back
+    description: Transfers back to location prior to teleporting. Works multiple times in one session. Saves coordinates to /forward.
+  forward:
+    permission: epicwarps.command.forward
+    description: Transfers forward to location prior to /back. Works multiple times in one session. Saves coordinates to /back.
