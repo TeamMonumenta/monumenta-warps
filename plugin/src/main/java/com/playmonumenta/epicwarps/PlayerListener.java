@@ -34,7 +34,9 @@ public class PlayerListener implements Listener {
 		// Only add the location to the back stack if the player didn't just use /back or /forward
 		if (player.hasMetadata(Constants.PLAYER_SKIP_BACK_ADD_METAKEY)) {
 			player.removeMetadata(Constants.PLAYER_SKIP_BACK_ADD_METAKEY, mPlugin);
-		} else {
+		} else if (event.getFrom().distance(event.getTo()) > 2) {
+			// Only add locations to /back if they were more than two blocks away
+
 			// Get the stack of previous teleport locations
 			Stack<Location> backStack = null;
 			if (player.hasMetadata(Constants.PLAYER_BACK_STACK_METAKEY)) {
@@ -47,8 +49,6 @@ public class PlayerListener implements Listener {
 			if (backStack == null) {
 				backStack = new Stack<Location>();
 			}
-
-			// TODO PEEK
 
 			backStack.push(event.getFrom());
 			player.setMetadata(Constants.PLAYER_BACK_STACK_METAKEY, new FixedMetadataValue(mPlugin, backStack));
