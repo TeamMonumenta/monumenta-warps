@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -18,12 +19,13 @@ import org.bukkit.Location;
 import org.bukkit.util.StringUtil;
 
 public class WarpManager {
+	private static final Pattern ILLEGAL_CHARS_PATTERN = Pattern.compile("[^a-zA-Z0-9]");
+
 	// This is ugly - only one warp mananger can exist at a time
 	private static WarpManager WARP_MANAGER = null;
 
 	private Plugin mPlugin;
 
-	// TODO: Case insensitive warping
 	private SortedMap<String, Warp> mWarps = new TreeMap<String, Warp>();
 
 	public WarpManager(Plugin plugin, YamlConfiguration config) {
@@ -47,8 +49,15 @@ public class WarpManager {
 				continue;
 			}
 
+			if (ILLEGAL_CHARS_PATTERN.matcher(key).find()) {
+				plugin.getLogger().log(Level.WARNING,
+				                       "warps entry '" + key + "' contains illegal characters!");
+				continue;
+			}
+
+			String lowerCaseKey = key.toLowerCase();
 			try {
-				mWarps.put(key, Warp.fromConfig(key, warpsSection.getConfigurationSection(key)));
+				mWarps.put(lowerCaseKey, Warp.fromConfig(lowerCaseKey, warpsSection.getConfigurationSection(key)));
 			} catch (Exception e) {
 				plugin.getLogger().log(Level.WARNING, "Failed to load warp '" + key + "': ", e);
 				continue;
@@ -61,8 +70,14 @@ public class WarpManager {
 	}
 
 	public void addWarp(String name, Location loc) throws Exception {
+		name = name.toLowerCase();
+
 		if (mWarps.containsKey(name)) {
 			throw new Exception("Warp '" + name + "' already exists");
+		}
+
+		if (ILLEGAL_CHARS_PATTERN.matcher(name).find()) {
+			throw new Exception("Warp '" + name + "' contains illegal characters!");
 		}
 
 		mWarps.put(name, new Warp(name, loc));
@@ -70,6 +85,8 @@ public class WarpManager {
 	}
 
 	public void removeWarp(String name) throws Exception {
+		name = name.toLowerCase();
+
 		if (!mWarps.containsKey(name)) {
 			throw new Exception("Warp '" + name + "' does not exist");
 		}
@@ -107,6 +124,8 @@ public class WarpManager {
 	}
 
 	public List<String> tabComplete(String partial) {
+		partial = partial.toLowerCase();
+
         final List<String> completions = new ArrayList<String>(mWarps.size());
 
 		StringUtil.copyPartialMatches(partial, mWarps.keySet(), completions);
@@ -115,6 +134,8 @@ public class WarpManager {
 	}
 
 	public void warp(Player player, String name) throws Exception {
+		name = name.toLowerCase();
+
 		Warp warp = mWarps.get(name);
 		if (warp == null) {
 			throw new Exception("Warp '" + name + "' not found!");
