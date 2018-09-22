@@ -3,6 +3,7 @@ package com.playmonumenta.epicwarps.command;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.Map;
@@ -16,14 +17,14 @@ import net.sourceforge.argparse4j.internal.ArgumentParserImpl;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.Plugin;
 
 /**
  * Base class for command.
  */
-public abstract class AbstractCommand implements CommandExecutor {
+public abstract class AbstractCommand implements TabExecutor {
 	private final String mName;
 	private final String mDescription;
 	protected final Plugin mPlugin;
@@ -92,6 +93,12 @@ public abstract class AbstractCommand implements CommandExecutor {
 			onError(context, e);
 			return false;
 		}
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		// No tab complete by default
+		return null;
 	}
 
 	/**

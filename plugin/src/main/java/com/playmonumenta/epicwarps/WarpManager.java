@@ -1,5 +1,8 @@
 package com.playmonumenta.epicwarps;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +15,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.Location;
+import org.bukkit.util.StringUtil;
 
 public class WarpManager {
 	// This is ugly - only one warp mananger can exist at a time
@@ -19,6 +23,7 @@ public class WarpManager {
 
 	private Plugin mPlugin;
 
+	// TODO: Case insensitive warping
 	private SortedMap<String, Warp> mWarps = new TreeMap<String, Warp>();
 
 	public WarpManager(Plugin plugin, YamlConfiguration config) {
@@ -99,6 +104,14 @@ public class WarpManager {
 				}
 			}
 		}
+	}
+
+	public List<String> tabComplete(String partial) {
+        final List<String> completions = new ArrayList<String>(mWarps.size());
+
+		StringUtil.copyPartialMatches(partial, mWarps.keySet(), completions);
+		Collections.sort(completions);
+		return completions;
 	}
 
 	public void warp(Player player, String name) throws Exception {
