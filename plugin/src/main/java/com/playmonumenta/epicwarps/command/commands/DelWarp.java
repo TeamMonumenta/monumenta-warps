@@ -40,9 +40,10 @@ public class DelWarp extends AbstractPlayerCommand {
 			WarpManager.getWarpManager().removeWarp(name);
 		} catch (Exception e) {
 			player.sendMessage(ChatColor.RED + "" + e.getMessage());
+			return false;
 		}
 
-		// TODO: Success message
+		player.sendMessage(ChatColor.GOLD + "Warp '" + name + "' removed.");
 
 		return true;
 	}

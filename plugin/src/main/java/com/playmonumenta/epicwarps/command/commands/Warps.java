@@ -38,6 +38,7 @@ public class Warps extends AbstractPlayerCommand {
 			WarpManager.getWarpManager().listWarps(player, page);
 		} catch (Exception e) {
 			player.sendMessage(ChatColor.RED + "" + e.getMessage());
+			return false;
 		}
 
 		return true;

@@ -36,9 +36,10 @@ public class AddWarp extends AbstractPlayerCommand {
 			WarpManager.getWarpManager().addWarp(name, player.getLocation());
 		} catch (Exception e) {
 			player.sendMessage(ChatColor.RED + "" + e.getMessage());
+			return false;
 		}
 
-		// TODO: Success message
+		player.sendMessage(ChatColor.GOLD + "Warp '" + name + "' added.");
 
 		return true;
 	}
