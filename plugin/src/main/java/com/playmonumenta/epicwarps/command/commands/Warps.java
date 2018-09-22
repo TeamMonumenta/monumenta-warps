@@ -22,20 +22,14 @@ public class Warps extends AbstractPlayerCommand {
 
 	@Override
 	protected void configure(final ArgumentParser parser) {
-		parser.addArgument("page")
-		.help("Warp page")
-		.type(Integer.class)
-		.nargs("?")
-		.setDefault(1);
 	}
 
 	@Override
 	protected boolean run(final CommandContext context) {
 		final Player player = context.getPlayer().get();
-		final int page = context.getNamespace().get("page");
 
 		try {
-			WarpManager.getWarpManager().listWarps(player, page);
+			WarpManager.getWarpManager().listWarps(player);
 		} catch (Exception e) {
 			player.sendMessage(ChatColor.RED + "" + e.getMessage());
 			return false;

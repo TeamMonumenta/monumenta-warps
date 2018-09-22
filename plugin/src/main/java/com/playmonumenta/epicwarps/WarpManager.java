@@ -95,32 +95,18 @@ public class WarpManager {
 		mPlugin.saveConfig();
 	}
 
-	public void listWarps(CommandSender sender, int page) {
-		final int ITEMS_PER_PAGE = 10;
-		final int numPages = ((mWarps.size() - 1) / ITEMS_PER_PAGE) + 1;
-
+	public void listWarps(CommandSender sender) {
 		if (mWarps.isEmpty()) {
 			sender.sendMessage("No warps defined");
 			return;
 		}
 
-		sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Warp List (Page " + Integer.toString(page) +
-		                   " of " + Integer.toString(numPages) + ")");
-		boolean empty = true;
-		int skipped = 0;
-		int printed = 0;
+		sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Warp List");
+		String warpsString = ChatColor.GREEN + "";
 		for (Map.Entry<String, Warp> entry : mWarps.entrySet()) {
-			if (skipped < (page - 1) * ITEMS_PER_PAGE) {
-				skipped++;
-			} else {
-				printed++;
-				sender.sendMessage(ChatColor.GREEN + entry.getKey());
-
-				if (printed >= ITEMS_PER_PAGE) {
-					return;
-				}
-			}
+			warpsString = warpsString + entry.getKey() + "  ";
 		}
+		sender.sendMessage(warpsString);
 	}
 
 	public List<String> tabComplete(String partial) {
