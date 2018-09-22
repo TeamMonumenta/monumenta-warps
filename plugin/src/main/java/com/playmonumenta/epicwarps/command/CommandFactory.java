@@ -14,6 +14,10 @@ public class CommandFactory {
 	public static void createCommands(JavaPlugin plugin) {
 		createCommand(plugin, new Back(plugin));
 		createCommand(plugin, new Forward(plugin));
+		createCommand(plugin, new Warp(plugin));
+		createCommand(plugin, new Warps(plugin));
+		createCommand(plugin, new SetWarp(plugin));
+		createCommand(plugin, new DelWarp(plugin));
 	}
 
 	/**
