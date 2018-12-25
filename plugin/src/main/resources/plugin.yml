@@ -1,6 +1,6 @@
 name: EpicWarps
 main: com.playmonumenta.epicwarps.Plugin
-version: 1.0
+version: 1.2
 commands:
   warp:
     permission: epicwarps.warp
