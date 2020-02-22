@@ -2,7 +2,7 @@ package com.playmonumenta.warps.command.commands;
 
 import com.playmonumenta.warps.command.CommandContext;
 
-import java.util.Stack;
+import java.util.Deque;
 
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 
@@ -34,10 +34,10 @@ public class Forward extends TeleportBase {
 		//noinspection OptionalGetWithoutIsPresent - checked before being called
 		final Player player = context.getPlayer().get();
 		final int numSteps = context.getNamespace().get("steps");
-		final Stack<Location> backStack = getBackStack(player);
-		final Stack<Location> forwardStack = getForwardStack(player);
+		final Deque<Location> backStack = getBackStack(player);
+		final Deque<Location> forwardStack = getForwardStack(player);
 
-		if (forwardStack.empty()) {
+		if (forwardStack.isEmpty()) {
 			sendErrorMessage(context, "No forward location to teleport to");
 			return false;
 		}

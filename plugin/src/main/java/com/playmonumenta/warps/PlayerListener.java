@@ -3,8 +3,9 @@ package com.playmonumenta.warps;
 import com.playmonumenta.warps.Constants;
 import com.playmonumenta.warps.Plugin;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,19 +39,19 @@ public class PlayerListener implements Listener {
 			// Only add locations to /back if they were more than two blocks away
 
 			// Get the stack of previous teleport locations
-			Stack<Location> backStack = null;
+			Deque<Location> backStack = null;
 			if (player.hasMetadata(Constants.PLAYER_BACK_STACK_METAKEY)) {
 				List<MetadataValue> val = player.getMetadata(Constants.PLAYER_BACK_STACK_METAKEY);
 				if (val != null && !val.isEmpty()) {
-					backStack = (Stack<Location>)val.get(0).value();
+					backStack = (Deque<Location>)val.get(0).value();
 				}
 			}
 
 			if (backStack == null) {
-				backStack = new Stack<Location>();
+				backStack = new ArrayDeque<Location>();
 			}
 
-			backStack.push(event.getFrom());
+			backStack.addFirst(event.getFrom());
 			player.setMetadata(Constants.PLAYER_BACK_STACK_METAKEY, new FixedMetadataValue(mPlugin, backStack));
 		}
 	}
