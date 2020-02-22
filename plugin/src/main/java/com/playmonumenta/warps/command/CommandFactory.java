@@ -1,6 +1,6 @@
-package com.playmonumenta.epicwarps.command;
+package com.playmonumenta.warps.command;
 
-import com.playmonumenta.epicwarps.command.commands.*;
+import com.playmonumenta.warps.command.commands.*;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

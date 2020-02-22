@@ -1,4 +1,4 @@
-package com.playmonumenta.epicwarps.command;
+package com.playmonumenta.warps.command;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

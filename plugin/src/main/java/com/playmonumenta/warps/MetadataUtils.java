@@ -1,4 +1,4 @@
-package com.playmonumenta.epicwarps;
+package com.playmonumenta.warps;
 
 import java.lang.reflect.InvocationTargetException;
 

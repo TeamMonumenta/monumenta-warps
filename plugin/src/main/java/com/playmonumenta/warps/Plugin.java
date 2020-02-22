@@ -1,6 +1,6 @@
-package com.playmonumenta.epicwarps;
+package com.playmonumenta.warps;
 
-import com.playmonumenta.epicwarps.command.CommandFactory;
+import com.playmonumenta.warps.command.CommandFactory;
 
 import java.io.File;
 import java.io.IOException;

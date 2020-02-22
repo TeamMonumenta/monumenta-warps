@@ -1,7 +1,7 @@
-package com.playmonumenta.epicwarps;
+package com.playmonumenta.warps;
 
-import com.playmonumenta.epicwarps.Constants;
-import com.playmonumenta.epicwarps.Plugin;
+import com.playmonumenta.warps.Constants;
+import com.playmonumenta.warps.Plugin;
 
 import java.util.List;
 import java.util.Stack;

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.playmonumenta</groupId>
-    <artifactId>epic-warps</artifactId>
+    <artifactId>monumenta-warps</artifactId>
     <version>dev</version>
 
     <properties>
@@ -47,7 +47,7 @@
     </dependencies>
 
     <build>
-        <finalName>EpicWarps_${project.version}_${maven.build.timestamp}</finalName>
+        <finalName>MonumentaWarps_${project.version}_${maven.build.timestamp}</finalName>
         <!--<finalName>${project.artifactId}_${minecraft.server.version}_${project.version}_${maven.build.timestamp}</finalName>-->
         <pluginManagement>
             <plugins>

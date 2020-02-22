@@ -1,25 +1,25 @@
-name: EpicWarps
-main: com.playmonumenta.epicwarps.Plugin
+name: MonumentaWarps
+main: com.playmonumenta.warps.Plugin
 version: 0.01
 commands:
   warp:
-    permission: epicwarps.warp
+    permission: warps.warp
     description: Teleports the player to the specified warp.
   warps:
-    permission: epicwarps.warp
+    permission: warps.warp
     description: Lists available warps.
   addwarp:
-    permission: epicwarps.addwarp
+    permission: warps.addwarp
     description: Creates a new warp at the current location.
   setwarp:
-    permission: epicwarps.addwarp
+    permission: warps.addwarp
     description: Creates a new warp at the current location.
   delwarp:
-    permission: epicwarps.delwarp
+    permission: warps.delwarp
     description: Deletes an existing warp.
   back:
-    permission: epicwarps.back
+    permission: warps.back
     description: Transfers back to location prior to teleporting. Works multiple times in one session. Saves coordinates to /forward.
   forward:
-    permission: epicwarps.forward
+    permission: warps.forward
     description: Transfers forward to location prior to /back. Works multiple times in one session. Saves coordinates to /back.

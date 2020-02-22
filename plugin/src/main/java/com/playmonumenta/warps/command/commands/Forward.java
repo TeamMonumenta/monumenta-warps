@@ -1,6 +1,6 @@
-package com.playmonumenta.epicwarps.command.commands;
+package com.playmonumenta.warps.command.commands;
 
-import com.playmonumenta.epicwarps.command.CommandContext;
+import com.playmonumenta.warps.command.CommandContext;
 
 import java.util.Stack;
 
@@ -10,12 +10,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 
-public class Back extends TeleportBase {
+public class Forward extends TeleportBase {
 
-	public Back(Plugin plugin) {
+	public Forward(Plugin plugin) {
 		super(
-		    "back",
-		    "Transfers back to location prior to teleporting, or multiple teleports prior. Saves coordinates to /forward.",
+		    "forward",
+		    "Transfers forward to location prior to /back, or multiple teleports prior. Saves coordinates to /back.",
 		    plugin
 		);
 	}
@@ -23,7 +23,7 @@ public class Back extends TeleportBase {
 	@Override
 	protected void configure(final ArgumentParser parser) {
 		parser.addArgument("steps")
-		.help("number of teleports back")
+		.help("number of teleports forward")
 		.type(Integer.class)
 		.nargs("?")
 		.setDefault(1);
@@ -37,18 +37,18 @@ public class Back extends TeleportBase {
 		final Stack<Location> backStack = getBackStack(player);
 		final Stack<Location> forwardStack = getForwardStack(player);
 
-		if (backStack.empty()) {
-			sendErrorMessage(context, "No back location to teleport to");
+		if (forwardStack.empty()) {
+			sendErrorMessage(context, "No forward location to teleport to");
 			return false;
 		}
 
-		final Location target = getTarget(player, numSteps, forwardStack, backStack);
+		final Location target = getTarget(player, numSteps, backStack, forwardStack);
 
 		skipBackAdd(player);
 		saveUpdatedStacks(player, forwardStack, backStack);
 
 		player.teleport(target);
-		sendMessage(context, "Teleporting back" + (backStack.isEmpty() ? " (end of list)" : ""));
+		sendMessage(context, "Teleporting forward" + (backStack.isEmpty() ? " (end of list)" : ""));
 
 		return true;
 	}

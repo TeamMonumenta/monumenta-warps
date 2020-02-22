@@ -1,8 +1,8 @@
-package com.playmonumenta.epicwarps.command.commands;
+package com.playmonumenta.warps.command.commands;
 
-import com.playmonumenta.epicwarps.command.AbstractPlayerCommand;
-import com.playmonumenta.epicwarps.command.CommandContext;
-import com.playmonumenta.epicwarps.WarpManager;
+import com.playmonumenta.warps.command.AbstractPlayerCommand;
+import com.playmonumenta.warps.command.CommandContext;
+import com.playmonumenta.warps.WarpManager;
 
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 

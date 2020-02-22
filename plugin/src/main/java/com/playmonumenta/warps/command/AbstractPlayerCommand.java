@@ -1,4 +1,4 @@
-package com.playmonumenta.epicwarps.command;
+package com.playmonumenta.warps.command;
 
 import org.bukkit.plugin.Plugin;
 
