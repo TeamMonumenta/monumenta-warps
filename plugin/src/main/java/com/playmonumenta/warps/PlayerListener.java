@@ -48,9 +48,12 @@ public class PlayerListener implements Listener {
 			}
 
 			if (backStack == null) {
-				backStack = new ArrayDeque<Location>();
+				backStack = new ArrayDeque<Location>(Constants.MAX_STACK_SIZE);
 			}
 
+			if (backStack.size() >= Constants.MAX_STACK_SIZE) {
+				backStack.removeLast();
+			}
 			backStack.addFirst(event.getFrom());
 			player.setMetadata(Constants.PLAYER_BACK_STACK_METAKEY, new FixedMetadataValue(mPlugin, backStack));
 		}

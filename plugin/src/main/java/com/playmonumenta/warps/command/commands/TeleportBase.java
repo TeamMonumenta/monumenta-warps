@@ -42,7 +42,7 @@ public abstract class TeleportBase extends AbstractPlayerCommand {
 	@SuppressWarnings("unchecked")
 	private Deque<Location> getStack(final Player player, final String metadataKey) {
 		final List<MetadataValue> metadata = player.getMetadata(metadataKey);
-		return metadata.isEmpty() ? new ArrayDeque<>() : (Deque<Location>) metadata.get(0).value();
+		return metadata.isEmpty() ? new ArrayDeque<>(Constants.MAX_STACK_SIZE) : (Deque<Location>) metadata.get(0).value();
 	}
 
 	/**
@@ -58,6 +58,9 @@ public abstract class TeleportBase extends AbstractPlayerCommand {
 		Location target = player.getLocation();
 
 		for (int i = 0; i < numSteps; i++) {
+			if (pushTo.size() >= Constants.MAX_STACK_SIZE) {
+				pushTo.removeLast();
+			}
 			pushTo.addFirst(target);
 			target = popFrom.removeFirst();
 
