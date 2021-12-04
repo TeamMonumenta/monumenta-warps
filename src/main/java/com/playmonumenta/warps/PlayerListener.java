@@ -26,8 +26,8 @@ public class PlayerListener implements Listener {
 		// Only add the location to the back stack if the player didn't just use /back or /forward
 		if (player.hasMetadata(Constants.PLAYER_SKIP_BACK_ADD_METAKEY)) {
 			player.removeMetadata(Constants.PLAYER_SKIP_BACK_ADD_METAKEY, WarpsPlugin.getInstance());
-		} else if (event.getFrom().distance(event.getTo()) > 2) {
-			// Only add locations to /back if they were more than two blocks away
+		} else if (!event.getFrom().getWorld().equals(event.getTo().getWorld()) || event.getFrom().distance(event.getTo()) > 2) {
+			// Only add locations to /back if they were more than two blocks away or a different world
 
 			// Get the stack of previous teleport locations
 			Deque<Location> backStack = null;
