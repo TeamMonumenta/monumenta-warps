@@ -2,13 +2,13 @@ package com.playmonumenta.warps.command;
 
 import java.util.Optional;
 
-import net.sourceforge.argparse4j.inf.Namespace;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.ProxiedCommandSender;
 import org.bukkit.entity.Player;
+
+import net.sourceforge.argparse4j.inf.Namespace;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class CommandContext {

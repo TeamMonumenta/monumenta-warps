@@ -1,14 +1,14 @@
 package com.playmonumenta.warps.command.commands;
 
-import com.playmonumenta.warps.command.CommandContext;
-
 import java.util.Deque;
 
-import net.sourceforge.argparse4j.inf.ArgumentParser;
+import com.playmonumenta.warps.command.CommandContext;
 
-import org.bukkit.entity.Player;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import net.sourceforge.argparse4j.inf.ArgumentParser;
 
 public class Back extends TeleportBase {
 

@@ -1,16 +1,14 @@
 package com.playmonumenta.warps;
 
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Iterator;
-import java.util.logging.Level;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.metadata.MetadataStoreBase;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.World;
 
 public class MetadataUtils {
 	public static void removeAllMetadata(Plugin plugin) {
@@ -35,8 +33,7 @@ public class MetadataUtils {
 			metaStore = (MetadataStoreBase<T>) method.invoke(obj);
 
 			if (metaStore == null) {
-				plugin.getLogger().log(Level.SEVERE,
-				                       "While clearing metadata, retrieved null metastore object for '" + getMetaMethodName + "'");
+				plugin.getLogger().severe("While clearing metadata, retrieved null metastore object for '" + getMetaMethodName + "'");
 				return;
 			}
 
@@ -44,27 +41,22 @@ public class MetadataUtils {
 			 * Use reflection (again) to reach into the metadata store to grab the underlying (private) map
 			 */
 			if (metaStore.getClass().getSuperclass() == null) {
-				plugin.getLogger().log(Level.SEVERE,
-				                       "While clearing metadata, metastore has no superclass for '" + getMetaMethodName + "'");
+				plugin.getLogger().severe("While clearing metadata, metastore has no superclass for '" + getMetaMethodName + "'");
 				return;
 			}
 
-			java.lang.reflect.Field field =
-			    metaStore.getClass().getSuperclass().getDeclaredField("metadataMap");
+			java.lang.reflect.Field field = metaStore.getClass().getSuperclass().getDeclaredField("metadataMap");
 			field.setAccessible(true);
 			metaMap = (Map<String, Map<Plugin, MetadataValue>>) field.get(metaStore);
 		} catch (SecurityException | NoSuchMethodException | NoSuchFieldException | IllegalArgumentException
 			         | IllegalAccessException | InvocationTargetException e) {
-			plugin.getLogger().log(Level.SEVERE,
-			                       "While clearing metadata, failed to retrieve CraftServer metadata map object for '" +
-			                       getMetaMethodName + "'");
+			plugin.getLogger().severe("While clearing metadata, failed to retrieve CraftServer metadata map object for '" + getMetaMethodName + "'");
 			e.printStackTrace();
 			return;
 		}
 
 		if (metaMap == null) {
-			plugin.getLogger().log(Level.SEVERE,
-			                       "While clearing metadata, retrieved null metadata map contents for '" + getMetaMethodName + "'");
+			plugin.getLogger().severe("While clearing metadata, retrieved null metadata map contents for '" + getMetaMethodName + "'");
 			return;
 		}
 

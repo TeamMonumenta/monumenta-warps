@@ -1,5 +1,5 @@
 name: MonumentaWarps
-main: com.playmonumenta.warps.Plugin
+main: com.playmonumenta.warps.WarpsPlugin
 version: 0.01
 commands:
   warp:
