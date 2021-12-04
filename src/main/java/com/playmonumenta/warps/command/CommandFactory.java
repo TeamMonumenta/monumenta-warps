@@ -1,6 +1,11 @@
 package com.playmonumenta.warps.command;
 
-import com.playmonumenta.warps.command.commands.*;
+import com.playmonumenta.warps.command.commands.AddWarp;
+import com.playmonumenta.warps.command.commands.Back;
+import com.playmonumenta.warps.command.commands.DelWarp;
+import com.playmonumenta.warps.command.commands.Forward;
+import com.playmonumenta.warps.command.commands.Warp;
+import com.playmonumenta.warps.command.commands.Warps;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

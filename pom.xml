@@ -136,7 +136,7 @@
                     </filters>
                     <transformers>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>com.playmonumenta.epic-warps.Plugin</mainClass>
+                            <mainClass>com.playmonumenta.warps.WarpsPlugin</mainClass>
                         </transformer>
                     </transformers>
                 </configuration>

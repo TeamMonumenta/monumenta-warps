@@ -1,14 +1,14 @@
 package com.playmonumenta.warps.command.commands;
 
-import com.playmonumenta.warps.command.AbstractPlayerCommand;
-import com.playmonumenta.warps.Constants;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
-import org.bukkit.entity.Player;
+import com.playmonumenta.warps.Constants;
+import com.playmonumenta.warps.command.AbstractPlayerCommand;
+
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;

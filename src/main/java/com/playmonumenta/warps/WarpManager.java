@@ -3,19 +3,19 @@ package com.playmonumenta.warps;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.Map;
-import java.util.regex.Pattern;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.Location;
 import org.bukkit.util.StringUtil;
 
 public class WarpManager {
@@ -24,17 +24,16 @@ public class WarpManager {
 	// This is ugly - only one warp mananger can exist at a time
 	private static WarpManager WARP_MANAGER = null;
 
-	private Plugin mPlugin;
-
 	private SortedMap<String, Warp> mWarps = new TreeMap<String, Warp>();
 
-	public WarpManager(Plugin plugin, YamlConfiguration config) {
+	public WarpManager(YamlConfiguration config) {
 		WARP_MANAGER = this;
-		mPlugin = plugin;
+
+		Logger logger = WarpsPlugin.getInstance().getLogger();
 
 		// Load the warps configuration section
 		if (!config.isConfigurationSection("warps")) {
-			plugin.getLogger().log(Level.INFO, "No warps defined");
+			logger.info("No warps defined");
 			return;
 		}
 		ConfigurationSection warpsSection = config.getConfigurationSection("warps");
@@ -44,14 +43,12 @@ public class WarpManager {
 		// Iterate over all the warps (shallow list at this level)
 		for (String key : keys) {
 			if (!warpsSection.isConfigurationSection(key)) {
-				plugin.getLogger().log(Level.WARNING,
-				                       "warps entry '" + key + "' is not a configuration section!");
+				logger.warning("warps entry '" + key + "' is not a configuration section!");
 				continue;
 			}
 
 			if (ILLEGAL_CHARS_PATTERN.matcher(key).find()) {
-				plugin.getLogger().log(Level.WARNING,
-				                       "warps entry '" + key + "' contains illegal characters!");
+				logger.warning("warps entry '" + key + "' contains illegal characters!");
 				continue;
 			}
 
@@ -59,7 +56,8 @@ public class WarpManager {
 			try {
 				mWarps.put(lowerCaseKey, Warp.fromConfig(lowerCaseKey, warpsSection.getConfigurationSection(key)));
 			} catch (Exception e) {
-				plugin.getLogger().log(Level.WARNING, "Failed to load warp '" + key + "': ", e);
+				logger.warning("Failed to load warp '" + key + "': " + e.getMessage());
+				e.printStackTrace();
 				continue;
 			}
 		}
@@ -81,7 +79,7 @@ public class WarpManager {
 		}
 
 		mWarps.put(name, new Warp(name, loc));
-		mPlugin.saveConfig();
+		WarpsPlugin.getInstance().saveConfig();
 	}
 
 	public void removeWarp(String name) throws Exception {
@@ -92,7 +90,7 @@ public class WarpManager {
 		}
 
 		mWarps.remove(name);
-		mPlugin.saveConfig();
+		WarpsPlugin.getInstance().saveConfig();
 	}
 
 	public void listWarps(CommandSender sender) {

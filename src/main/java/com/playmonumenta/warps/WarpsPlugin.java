@@ -1,28 +1,28 @@
 package com.playmonumenta.warps;
 
-import com.playmonumenta.warps.command.CommandFactory;
-
 import java.io.File;
 import java.io.IOException;
 
-import java.util.logging.Level;
+import com.playmonumenta.warps.command.CommandFactory;
 
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class Plugin extends JavaPlugin {
+public class WarpsPlugin extends JavaPlugin {
+	private static WarpsPlugin INSTANCE = null;
+
 	private YamlConfiguration mConfig;
 	public WarpManager mWarpManager = null;
 	private File mConfigFile;
 
 	@Override
 	public void onEnable() {
+		INSTANCE = this;
+
 		PluginManager manager = getServer().getPluginManager();
 
-		manager.registerEvents(new PlayerListener(this), this);
+		manager.registerEvents(new PlayerListener(), this);
 
 		CommandFactory.createCommands(this);
 
@@ -31,12 +31,18 @@ public class Plugin extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
+		INSTANCE = null;
+
 		// Save current warps
 		saveConfig();
 
 		getServer().getScheduler().cancelTasks(this);
 
 		MetadataUtils.removeAllMetadata(this);
+	}
+
+	public static WarpsPlugin getInstance() {
+		return INSTANCE;
 	}
 
 	public void reloadConfig() {
@@ -54,13 +60,13 @@ public class Plugin extends JavaPlugin {
 				// Create the file if it does not exist
 				mConfigFile.createNewFile();
 			} catch (IOException ex) {
-				getLogger().log(Level.SEVERE, "Failed to create non-existent configuration file");
+				getLogger().severe("Failed to create non-existent configuration file");
 			}
 		}
 
 		mConfig = YamlConfiguration.loadConfiguration(mConfigFile);
 
-		mWarpManager = new WarpManager(this, mConfig);
+		mWarpManager = new WarpManager(mConfig);
 	}
 
 	public void saveConfig() {
@@ -69,7 +75,8 @@ public class Plugin extends JavaPlugin {
 				mConfig = mWarpManager.getConfig();
 				mConfig.save(mConfigFile);
 			} catch (IOException ex) {
-				getLogger().log(Level.SEVERE, "Could not save config to " + mConfigFile, ex);
+				getLogger().severe("Could not save config to " + mConfigFile + ": " + ex.getMessage());
+				ex.printStackTrace();
 			}
 		}
 	}
