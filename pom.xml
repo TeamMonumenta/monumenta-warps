@@ -30,6 +30,10 @@
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>monumenta-world-management</id>
+            <url>https://raw.githubusercontent.com/TeamMonumenta/monumenta-world-management/master/mvn-repo/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -43,6 +47,12 @@
             <groupId>net.sourceforge.argparse4j</groupId>
             <artifactId>argparse4j</artifactId>
             <version>0.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.playmonumenta</groupId>
+            <artifactId>worlds</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

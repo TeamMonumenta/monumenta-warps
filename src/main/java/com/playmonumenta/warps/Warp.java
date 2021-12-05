@@ -54,7 +54,13 @@ public class Warp implements Comparable<Warp> {
 	}
 
 	public void warp(Player player) {
-		World world = Bukkit.getWorld(mWorldName);
+		World world = null;
+		if (Bukkit.getPluginManager().isPluginEnabled("MonumentaWorldManagement")) {
+			world = WorldManagementIntegration.getWorldFromIntegration(mWorldName);
+		} else {
+			world = Bukkit.getWorld(mWorldName);
+		}
+
 		if (world == null) {
 			player.sendMessage("Failed to warp to world " + mWorldName + " which is not loaded");
 		} else {

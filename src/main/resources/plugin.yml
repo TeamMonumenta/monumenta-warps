@@ -1,6 +1,7 @@
 name: MonumentaWarps
 main: com.playmonumenta.warps.WarpsPlugin
 version: 0.01
+softdepend: [MonumentaWorldManagement]
 commands:
   warp:
     permission: warps.warp
