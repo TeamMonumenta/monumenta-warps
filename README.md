@@ -13,3 +13,6 @@ You can download Monumenta Warps from [GitHub Packages](https://github.com/TeamM
 This is automatically updated every time new changes are made. Click on the
 com.playmonumenta.monumenta... link, and download the .jar file from the
 "Assets" category on the right side of the page.
+
+Optionally integrates with the [Monumenta World Management](https://github.com/TeamMonumenta/monumenta-world-management)
+plugin to support cross-world warps, automatically loading warp target worlds if they are unloaded.
