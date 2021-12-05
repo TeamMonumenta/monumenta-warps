@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 public class Warp implements Comparable<Warp> {
-	protected String mName;
-	private Location mLoc;
+	protected final String mName;
+	private final String mWorldName;
+	private final Location mLoc;
 
 	@Override
 	public int compareTo(Warp other) {
@@ -32,16 +34,18 @@ public class Warp implements Comparable<Warp> {
 			throw new Exception("Invalid pitch value");
 		}
 
-		return new Warp(name, new Location(Bukkit.getWorld(config.getString("world")),
-		                                   config.getDouble("x"),
-		                                   config.getDouble("y"),
-		                                   config.getDouble("z"),
-		                                   (float)config.getDouble("yaw"),
-		                                   (float)config.getDouble("pitch")));
+		return new Warp(name, config.getString("world"),
+		                new Location(null, // Leave world blank for now, will be populated later
+		                             config.getDouble("x"),
+									 config.getDouble("y"),
+									 config.getDouble("z"),
+									 (float)config.getDouble("yaw"),
+									 (float)config.getDouble("pitch")));
 	}
 
-	public Warp(String name, Location loc) throws Exception {
+	public Warp(String name, String worldName, Location loc) throws Exception {
 		mName = name;
+		mWorldName = worldName;
 		mLoc = loc;
 	}
 
@@ -50,8 +54,13 @@ public class Warp implements Comparable<Warp> {
 	}
 
 	public void warp(Player player) {
-		player.teleport(mLoc);
-		//TODO: play sound only to this player
+		World world = Bukkit.getWorld(mWorldName);
+		if (world == null) {
+			player.sendMessage("Failed to warp to world " + mWorldName + " which is not loaded");
+		} else {
+			mLoc.setWorld(world);
+			player.teleport(mLoc);
+		}
 	}
 
 	public void warpIfMatches(Player player, String target) {
@@ -63,7 +72,7 @@ public class Warp implements Comparable<Warp> {
 	public Map<String, Object> getConfig() {
 		Map<String, Object> configMap = new LinkedHashMap<String, Object>();
 
-		configMap.put("world", mLoc.getWorld().getName());
+		configMap.put("world", mWorldName);
 		configMap.put("x", mLoc.getX());
 		configMap.put("y", mLoc.getY());
 		configMap.put("z", mLoc.getZ());
