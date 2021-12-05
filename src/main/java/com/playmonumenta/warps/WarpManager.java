@@ -78,7 +78,7 @@ public class WarpManager {
 			throw new Exception("Warp '" + name + "' contains illegal characters!");
 		}
 
-		mWarps.put(name, new Warp(name, loc));
+		mWarps.put(name, new Warp(name, loc.getWorld().getName(), loc));
 		WarpsPlugin.getInstance().saveConfig();
 	}
 
