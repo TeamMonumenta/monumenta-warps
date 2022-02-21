@@ -5,9 +5,9 @@ import java.util.Deque;
 import java.util.List;
 
 import com.playmonumenta.warps.Constants;
+import com.playmonumenta.warps.Warp;
 import com.playmonumenta.warps.command.AbstractPlayerCommand;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -25,7 +25,7 @@ public abstract class TeleportBase extends AbstractPlayerCommand {
 	 * @param player
 	 * @return
 	 */
-	protected Deque<Location> getForwardStack(final Player player) {
+	protected Deque<Warp> getForwardStack(final Player player) {
 		return getStack(player, Constants.PLAYER_FORWARD_STACK_METAKEY);
 	}
 
@@ -35,14 +35,14 @@ public abstract class TeleportBase extends AbstractPlayerCommand {
 	 * @param player
 	 * @return
 	 */
-	protected Deque<Location> getBackStack(final Player player) {
+	protected Deque<Warp> getBackStack(final Player player) {
 		return getStack(player, Constants.PLAYER_BACK_STACK_METAKEY);
 	}
 
 	@SuppressWarnings("unchecked")
-	private Deque<Location> getStack(final Player player, final String metadataKey) {
+	private Deque<Warp> getStack(final Player player, final String metadataKey) {
 		final List<MetadataValue> metadata = player.getMetadata(metadataKey);
-		return metadata.isEmpty() ? new ArrayDeque<>(Constants.MAX_STACK_SIZE) : (Deque<Location>) metadata.get(0).value();
+		return metadata.isEmpty() ? new ArrayDeque<>(Constants.MAX_STACK_SIZE) : (Deque<Warp>) metadata.get(0).value();
 	}
 
 	/**
@@ -54,8 +54,8 @@ public abstract class TeleportBase extends AbstractPlayerCommand {
 	 * @param popFrom
 	 * @return
 	 */
-	protected Location getTarget(final Player player, final int numSteps, final Deque<Location> pushTo, final Deque<Location> popFrom) {
-		Location target = player.getLocation();
+	protected Warp getTarget(final Player player, final int numSteps, final Deque<Warp> pushTo, final Deque<Warp> popFrom) {
+		Warp target = new Warp("backforward", player.getLocation());
 
 		for (int i = 0; i < numSteps; i++) {
 			if (pushTo.size() >= Constants.MAX_STACK_SIZE) {
@@ -88,7 +88,7 @@ public abstract class TeleportBase extends AbstractPlayerCommand {
 	 * @param forwardStack
 	 * @param backStack
 	 */
-	protected void saveUpdatedStacks(final Player player, final Deque<Location> forwardStack, final Deque<Location> backStack) {
+	protected void saveUpdatedStacks(final Player player, final Deque<Warp> forwardStack, final Deque<Warp> backStack) {
 		player.setMetadata(Constants.PLAYER_FORWARD_STACK_METAKEY, new FixedMetadataValue(mPlugin, forwardStack));
 		player.setMetadata(Constants.PLAYER_BACK_STACK_METAKEY, new FixedMetadataValue(mPlugin, backStack));
 	}

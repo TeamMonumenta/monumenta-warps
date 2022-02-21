@@ -2,9 +2,9 @@ package com.playmonumenta.warps.command.commands;
 
 import java.util.Deque;
 
+import com.playmonumenta.warps.Warp;
 import com.playmonumenta.warps.command.CommandContext;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -34,20 +34,20 @@ public class Forward extends TeleportBase {
 		//noinspection OptionalGetWithoutIsPresent - checked before being called
 		final Player player = context.getPlayer().get();
 		final int numSteps = context.getNamespace().get("steps");
-		final Deque<Location> backStack = getBackStack(player);
-		final Deque<Location> forwardStack = getForwardStack(player);
+		final Deque<Warp> backStack = getBackStack(player);
+		final Deque<Warp> forwardStack = getForwardStack(player);
 
 		if (forwardStack.isEmpty()) {
 			sendErrorMessage(context, "No forward location to teleport to");
 			return false;
 		}
 
-		final Location target = getTarget(player, numSteps, backStack, forwardStack);
+		final Warp target = getTarget(player, numSteps, backStack, forwardStack);
 
 		skipBackAdd(player);
 		saveUpdatedStacks(player, forwardStack, backStack);
 
-		player.teleport(target);
+		target.warp(player);
 		sendMessage(context, "Teleporting forward" + (backStack.isEmpty() ? " (end of list)" : ""));
 
 		return true;

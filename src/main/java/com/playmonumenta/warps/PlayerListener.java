@@ -4,7 +4,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,22 +29,22 @@ public class PlayerListener implements Listener {
 			// Only add locations to /back if they were more than two blocks away or a different world
 
 			// Get the stack of previous teleport locations
-			Deque<Location> backStack = null;
+			Deque<Warp> backStack = null;
 			if (player.hasMetadata(Constants.PLAYER_BACK_STACK_METAKEY)) {
 				List<MetadataValue> val = player.getMetadata(Constants.PLAYER_BACK_STACK_METAKEY);
 				if (val != null && !val.isEmpty()) {
-					backStack = (Deque<Location>)val.get(0).value();
+					backStack = (Deque<Warp>)val.get(0).value();
 				}
 			}
 
 			if (backStack == null) {
-				backStack = new ArrayDeque<Location>(Constants.MAX_STACK_SIZE);
+				backStack = new ArrayDeque<Warp>(Constants.MAX_STACK_SIZE);
 			}
 
 			if (backStack.size() >= Constants.MAX_STACK_SIZE) {
 				backStack.removeLast();
 			}
-			backStack.addFirst(event.getFrom());
+			backStack.addFirst(new Warp("backforward", event.getFrom()));
 			player.setMetadata(Constants.PLAYER_BACK_STACK_METAKEY, new FixedMetadataValue(WarpsPlugin.getInstance(), backStack));
 		}
 	}

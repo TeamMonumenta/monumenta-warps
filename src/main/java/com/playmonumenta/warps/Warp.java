@@ -43,7 +43,11 @@ public class Warp implements Comparable<Warp> {
 									 (float)config.getDouble("pitch")));
 	}
 
-	public Warp(String name, String worldName, Location loc) throws Exception {
+	public Warp(String name, Location loc) {
+		this(name, loc.getWorld().getName(), loc);
+	}
+
+	public Warp(String name, String worldName, Location loc) {
 		mName = name;
 		mWorldName = worldName;
 		mLoc = loc;
