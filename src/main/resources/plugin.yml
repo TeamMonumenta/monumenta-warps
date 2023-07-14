@@ -1,7 +1,7 @@
 name: MonumentaWarps
 main: com.playmonumenta.warps.WarpsPlugin
 version: 0.01
-api-verison: '1.18'
+api-verison: '1.13'
 softdepend: [MonumentaWorldManagement]
 commands:
   warp:
